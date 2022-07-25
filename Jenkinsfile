@@ -12,7 +12,7 @@
         AWS_EB_ENVIRONMENT = "Dotnetjenkins-env"
     }
     stages {
-        stage('Validate') {
+        stage('Restor') {
             steps {
                 sh "dotnet restore"
             }
@@ -29,7 +29,7 @@
             }
         }
 
-         stage('Publish') {//3.Publish the report in Junit format
+         stage('package') {//3.Publish the report in Junit format
 
             steps {
                 sh "dotnet publish"
@@ -43,7 +43,7 @@
          stage('Publish artifacts to S3 Bucket') {
             steps {//5. Publish the artifacts
 
-                sh "aws configure set region us-west-1"
+                sh "aws configure set region us-east-1"
                 sh "aws s3 cp ./bin/Debug/net6.0/pipelines-dotnet-core.dll s3://$AWS_S3_BUCKET/$ARTIFACT_NAME"
             }
          }
